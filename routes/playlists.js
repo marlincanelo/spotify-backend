@@ -1,18 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const { Playlist } = require("../models");
+const { Playlist, Song } = require("../models");
 
 
 // GET ALL PLAYLISTS
 router.get("/", async (req, res) => {
+
   const playlists = await Playlist.findAll();
+  console.log(playlists)
   res.json(playlists);
 });
 
 
 //PLAYLIST BY ID
 router.get("/:id", async (req, res) => {
-  const playlist = await Playlist.findByPk(req.params.id);
+  const playlist = await Playlist.findByPk(req.params.id, {
+    include: Song
+  });
   if (!playlist) return res.status(404).json({ error: "Playlist not found" });
   res.json(playlist);
 });
