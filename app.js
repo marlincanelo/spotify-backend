@@ -2,9 +2,10 @@ const express = require("express")
 const app = express()
 const db = require("./db")
 const cors = require("cors")
-// const {Playlist, Song} = require("./models")
-// const playlistRouter = require("./routes/playlists")
-// const songRouter = require("./routes/songs")
+const {Playlist, Song} = require("./models")
+const playlistRouter = require("./routes/playlists")
+const songRouter = require("./routes/songs")
+const PORT = process.env.PORT || 8081;
 
 function logger(req, res, next) {
     console.log(req.method, req.url)
@@ -16,7 +17,8 @@ app.use(logger)
 
 
 
-// app.use("/api/playlists", playlistRouter);
+app.use("/api/playlists", playlistRouter);
+app.use("/api/songs", songRouter);
 
 
 app.get("/", (req, res) => {
@@ -33,7 +35,7 @@ db.sync()
   .then(() => {
     console.log('DB is synced with our app')
     
-    app.listen(8080, () => { 
+    app.listen(PORT, () => { 
       console.log("Server running on http://localhost:3000");
     });
   })

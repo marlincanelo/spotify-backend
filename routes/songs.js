@@ -5,7 +5,7 @@ const { Song } = require("../models");
 
 router.get("/", async (req, res) => {
   const songs = await Song.findAll();
-  res.json(playlists);
+  res.json(songs);
 });
 
 router.post("/", async (req, res) => {
@@ -26,3 +26,5 @@ router.delete("/:id", async (req, res) => {
   await song.destroy();
   res.sendStatus(204);
 });
+
+module.exports = router
